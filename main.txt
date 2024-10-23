@@ -1,16 +1,55 @@
 /******************************************************************************
 
-                              Online C++ Compiler.
-               Code, Compile, Run and Debug C++ program online.
-Write your code in this editor and press "Run" button to compile and execute it.
+To Become a True Mathemagician, you straight solve a shit ton of problems.
+
+-James Tam, <Lusacci / Azn_Mathemagician>
+
 
 *******************************************************************************/
 
 #include <iostream>
 
+using namespace std; 
+
+//Classes have default to private members, structs default to public members.
+//Practicing! Make a class of object that contains a method for solving a problem. 
+//Return that back to main! 
+
+class jTSolvingProjEulerQ1 {
+	int sum;
+	public: 
+		jTSolvingProjEulerQ1() {}
+		int returnSumOfAllMult_3_and_5(int num);
+};
+
+//___________________________________________________________________________
+// Problem 1 - Finding the sum of all multiples of 3 and 5 below 1000
+//___________________________________________________________________________
+//Simple enough, I'm just gonna iterate over this, then check if it's a multiple of 3 or 5. Then I add it to the sum.
+//Using Auto keyword because I am lazy. 
+
+int jTSolvingProjEulerQ1::returnSumOfAllMult_3_and_5(int num) {
+    int sum = 0; 
+    for(auto i = 0; i < num; i++) {
+        if (i % 3 == 0 || i % 5 == 0) {
+            sum += i;
+        }
+    }
+    
+    cout << "Called the returnSumOfAllMult_3_and_5 function! You gave me: " << num << " as the range. \n"; 
+	return sum;
+}
+
 int main()
 {
-    std::cout<<"Hello World";
-
+    cout<<"Azn_Mathemagician, solving mathematical problems one at a time ~ \n";
+    cout<<"Here's me answering the first problem with a class and method! \n";
+    jTSolvingProjEulerQ1 jT1; 
+    int answer = jT1.returnSumOfAllMult_3_and_5(1000);
+    cout << "The Answer to the first problem is: " << answer << "\n";
+    //___________________________________________________________________________
+    
+    //___________________________________________________________________________
+    
     return 0;
 }
