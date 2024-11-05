@@ -1,22 +1,91 @@
 /******************************************************************************
+Run this whole text file in the online C++ compiler version 17 + 
+The best way to gain confidence, is to quite literally implement everything at least once. 
+
+Then you have this file to come back to later. 
 
 To Become a True Mathemagician, you straight solve a shit ton of problems.
 
 -James Tam, <Lusacci / Azn_Mathemagician>
 
+"Did you sit in the chair, and actually do it?"
 
+Practicing Mathematics in Programming here: 
+
+https://projecteuler.net/archives
+"You can read a math text book to be a mathematician, Solve Euler Problems to be a Mathemagician."
 *******************************************************************************/
 
 #include <iostream>
+#include <string>
+#include <vector>
+#include <variant>
+#include <map>
+#include <cstring>  
 
-using namespace std; 
+using namespace std;
 
-//Classes have default to private members, structs default to public members.
-//Practicing! Make a class of object that contains a method for solving a problem. 
-//Return that back to main! 
+// Testing Generic template classes. 
+template<class T>
+class jTypeItem {
+    private: 
+        T item; 
+        
+    public: 
+        jTypeItem(T n) : item(n) {}
+        T getItem() { return item;}
+};
+
+//Variatic Recursion 
+template<typename T>
+T jObjectItemSums (T typeValue) {
+    return typeValue;
+}
+
+template<typename T, typename ... Args>
+T jObjectItemSums (T firstType, Args ... args) {
+    return firstType + jObjectItemSums(args...);
+}
+
+template<typename T>
+T maxOf(T a, T b) {
+    return a > b ? a : b;
+}
+
+//Typical Classes and objects example. Class member variables are private by default, structs are public by default.
+class jObjectType2 {
+    int id; 
+    std::string name;
+    public: 
+        jObjectType2(std::string s, int v) : id(v), name(s) {};
+        int getId(){ return id; };
+        void setId(int value) { id = value; };
+        void print(std::string);
+};
+
+
+//This is how you implement the method you declared in a class. 
+void jObjectType2::print(std::string s) {
+    cout << "The string is: " << s; 
+}
+
+// Testing Overloaded constructors, Default Constructors. (PLAY WITH THIS ONE ALOT.)
+class jObjectType3 {
+    std::string m_s1;
+    std::string m_s2;
+    std::string m_s3;
+    public: 
+        //It may be easier to do the default one this way, no need to make the specified function for it. 
+        jObjectType3();
+        //Going to try to make this handle constant objects and variables. 
+        jObjectType3(const std::string& v1, const std::string& v2, const std::string& v3);
+        //Copy constructor. 
+        jObjectType3(const jObjectType3& jClone);
+        //Destructor 
+        ~jObjectType3();
+};
 
 class jTSolvingProjEulerQ1 {
-	int sum;
 	public: 
 		jTSolvingProjEulerQ1() {}
 		int returnSumOfAllMult_3_and_5(int num);
@@ -40,16 +109,293 @@ int jTSolvingProjEulerQ1::returnSumOfAllMult_3_and_5(int num) {
 	return sum;
 }
 
+jObjectType3::jObjectType3() : m_s1(""), m_s2(""), m_s3("") {
+    cout << "Default Constructor for jObjectType3 \n";
+}
+
+jObjectType3::jObjectType3(const std::string& v1, const std::string& v2, const std::string& v3) : m_s1(v1), m_s2(v2), m_s3(v3) {
+    cout << "Testing Overloaded Constructor the first time around. \n";
+}
+
+jObjectType3::jObjectType3(const jObjectType3& jClone) {
+    cout << "Copy Constructor has been called.\n";
+    //Assigning member variables accordingly. 
+    m_s1 = jClone.m_s1;
+    m_s2 = jClone.m_s2;
+    m_s3 = jClone.m_s3;
+}
+
+//Uncomment the following block of code if you actually give a shit about when destructor is called. 
+
+jObjectType3::~jObjectType3(){
+    static int count = 0;
+    cout << "Called ze Destructor, happens at the end. count: " << count << "\n";
+    count++;
+} 
+
+struct jamesStruct {
+  int id;
+  std::string name;
+  
+  public: 
+    int getValue() const;
+    void setValue(int n_id, string n_name);
+}; 
+//Unused
+//const size_t byte {8};
+typedef uint32_t var_j;
+typedef uint64_t var_t;
+
+struct jt{
+    var_j j {};
+    var_t t {};
+};
+
+int jamesbasicfunc() {
+    cout << "Some Random function Call, testing basic capabilities..\n";
+    static int val = 0;
+    return ++val;
+}
+
+template<class T>
+vector<T> insertItemIntoVectorAtIndexAndReturnIt(vector<T> vector, T item, int index) {
+    //Initialize empty vector.
+    //Easiest way is to make a new vector that has the order of what I want and return it. 
+    std::vector<T> updatedVector = {};
+    if(vector.size() == 0) {
+        //Add the item, return it. 
+        updatedVector.push_back(item);
+    } else if(index > vector.size() - 1){
+        //Add this shit at the end. 
+        vector.push_back(item);
+        updatedVector = vector;
+    } else {
+        //If it's within range, add it in range. 
+        for (auto k = 0; k < vector.size(); k++) {
+            if(k == index) {
+                //At the index we want, add your item first.
+                updatedVector.push_back(item);
+            }
+            //Default case. keep going.  
+            updatedVector.push_back(vector[k]);
+        }
+    }
+    return updatedVector;
+}
+
+//Practicing Functors. 
+class jHandleFunctor {
+    string text; 
+    public: 
+        jHandleFunctor(string str = "Default text") : text(str) {}
+        string operator () (string n) const { return text + " but now with your string: " + n;}
+};
+
+
+vector<string> myVersionOfStringSplit(std::string yourString, char delimiter){
+    int stringLength = yourString.length();
+    std::string currString = "";
+    cout << "Here is your string: " << yourString << "\n";
+    vector<std::string> stringVect = {};
+    for(auto strPointer = 0; strPointer <= stringLength; strPointer++) {
+        if(yourString[strPointer] == delimiter) {
+            stringVect.push_back(currString);
+            currString.clear();
+            strPointer++;
+        } 
+        if(strPointer == stringLength) {
+            stringVect.push_back(currString);
+        }
+        currString += yourString[strPointer];
+    }
+    return stringVect;
+}
+
 int main()
 {
-    cout<<"Azn_Mathemagician, solving mathematical problems one at a time ~ \n";
-    cout<<"Here's me answering the first problem with a class and method! \n";
-    jTSolvingProjEulerQ1 jT1; 
-    int answer = jT1.returnSumOfAllMult_3_and_5(1000);
-    cout << "The Answer to the first problem is: " << answer << "\n";
-    //___________________________________________________________________________
+    auto test = "James_Tam_Test_String"; 
+    //Looping over strings....can be retrieved from streams later. 
+    cout << "Could be useful later to iterate over strings... taken from UDP.\n";
+    for(auto *t = test; *t; t++){
+        cout << "Value of t: " << *t << "\n";
+    }
+    cout << "________________________________________________________________\n";
+    cout << "Range Based For Loop Example.\n";
+    auto nums = {1,2,3,4};
     
-    //___________________________________________________________________________
+    //Range based for loop 
+    for(const auto &a : nums) {
+        cout << "Value of a: " << a << "\n";          
+    }
+    
+    cout << "________________________________________________________________\n";
+    // Looping over vectors
+    cout << "Using iterator over this vector\n";
+    std::vector<int> vi {1 , 2, 3, 4, 5}; 
+    for(std::vector<int>::iterator it = vi.begin(); it != vi.end(); ++it){
+        cout << "Value of current iterator: " << *it << "\n";
+    }
+    cout << "________________________________________________________________\n";
+    //Function Call tests
+    cout << "Basic function call tests: " << jamesbasicfunc() << "\n";
+    cout << "Basic function call tests: " << jamesbasicfunc() << "\n";
+    cout << "Basic function call tests: " << jamesbasicfunc() << "\n";
+    cout << "Reached the end of main.\n";
+    cout << "________________________________________________________________\n";
+    // Practicing generic class creation. Uses a type of object to create a number of these. 
+    jTypeItem<int> numberInt(7);
+    jTypeItem<double> numberDouble(7.7);
+    jTypeItem<std::string> string("jObjectString");
+    jTypeItem<char> charItem('D');
+    // You cannot use the basic t getItem for storing an object of Vectors. You will need another get. 
+    
+    cout << "This is the value of numberInt: " << numberInt.getItem() << "\n"; 
+    cout << "This is the value of numberDouble: " << numberDouble.getItem() << "\n"; 
+    cout << "This is the value of string: " << string.getItem() << "\n";
+    cout << "This is the value of string: " << charItem.getItem() << "\n";
+    cout << "________________________________________________________________\n";
+    
+    // Variatic Recursion Print Values. This will collect all the arguments passed into it by defining a type to expect, and recusive function handling. 
+    // Expect the sum of the arguments given. 
+    cout << "jObjectItemSums(1, 3, 5) will give: " << jObjectItemSums(1, 3, 5) << "\n";
+    cout << "jObjectItemSums(1, 3, 5, 7) will give: " << jObjectItemSums(1, 3, 5, 7) << "\n";
+    cout << "jObjectItemSums(1, 3, 5, 7, 42) will give: " << jObjectItemSums(1, 3, 5, 7, 42) << "\n";
+    
+    // This is an example of a ternary. 
+    cout << "maxOf(1,2) will give: " << maxOf(1,2) << "\n";
+    cout << "________________________________________________________________\n";
+    
+    //Using said basic class and object. Constructor practice.
+    jObjectType2 jObject("name1", 1);
+    jObject.setId(2);
+    cout << "The id of this basic object is: " << jObject.getId() << "\n";
+    jObject.print("Print function is run this way, no need for using cout. \n");
+    cout << "________________________________________________________________\n";
+    
+    //Testing overloaded constructors and copied expected values in jObjectType3
+    jObjectType3 jObj3_1 {};
+    jObjectType3 jObj3_2("Test1","Test2","Test3");
+    //Copy Constructor Use.
+    jObjectType3 jObj3_3(jObj3_1);
+    cout << "________________________________________________________________\n";
+    
+    cout << "Here is the sum of all multiples of 3 and 5 below 1000. Project Euler Problem 1. \n";
+    jTSolvingProjEulerQ1 solver;
+    int answer = solver.returnSumOfAllMult_3_and_5(1000);
+    cout << answer << "\n";
+    cout << "________________________________________________________________\n";
+    
+    cout << "Let's start using our data structures defined in the standard library. \n";
+    cout << "________________________________________________________________\n";
+    
+    cout << "Fun with Vectors. \n";
+    
+    //Vectors and what you can do with the vector object. 
+    std::vector<int> vectorObj = {1, 2, 3, 4, 5};
+    cout << "Here's the vector's size: " << vectorObj.size() << "\n";
+    cout << "What is at the front of the vector: " << vectorObj.front() << "\n";
+    cout << "What is at the back of the vector: " << vectorObj.back() << "\n";
+    
+    //Insert element at the end of the vector. 
+    vectorObj.push_back(7);
+    cout << "Here's the vector's size after push_back: " << vectorObj.size() << "\n";
+    cout << "Here's what's inside: \n";
+    for(int i : vectorObj) {
+        cout << i << " ";
+    }
+    cout << "\n";
+    
+    //Doing stuff inside of vectors.
+    int value = vectorObj.at(3);
+    cout << "The value at index 3 of vectorObj is: " << value << "\n";
+    cout << "This is because index starts at 0. \n";
+    
+    //Insert item at the index of a vector.... 
+    auto updatedV = insertItemIntoVectorAtIndexAndReturnIt(vectorObj, 0, 2);
+    cout << "Finished inserting, please see the method for how it does this. Updated Vector has: " << "\n";
+    for(int i : updatedV) {
+        cout << i << " ";
+    }
+    cout << "\n";
+
+    std::vector<double> vectorObj2 = {1.0, 2.2, 3.3, 4.7, 5.11};
+    //Insert item at the index of a vector.... 
+    auto updatedDoubleV = insertItemIntoVectorAtIndexAndReturnIt(vectorObj2, 0.1, 1);
+    cout << "Finished inserting, please see the method for how it does this. Updated Vector has: " << "\n";
+    for(double j : updatedDoubleV) {
+        cout << j << " ";
+    }
+    
+    //Empty Vector Case
+    std::vector<int> vectorObj3 = {};
+    auto updatedNothingV = insertItemIntoVectorAtIndexAndReturnIt(vectorObj3, 5, 2);
+    cout << "Finished inserting, please see the method for how it does this. Updated Vector has: " << "\n";
+    for(double j : updatedNothingV) {
+        cout << j << " " << "\n";
+    }
+    
+    cout << "________________________________________________________________\n";
+    cout << "Testing the std hashmap capabilities.\n";
+    cout << "________________________________________________________________\n";
+    
+    std::map<std::string, std::string> jMap = {};
+    std::map<std::string, std::string> jMap2 = {{"jMap2Val", "20"}};
+    cout << "Generate 100 rando key value pairs. Will be playing with this and what you can do with std::map. \n";
+    for(auto d = 1; d < 101; d++) {
+        //Create some Keys and Values to insert into jMap
+        std::string currKey = "Key" + std::to_string(d); 
+        std::string val = "Value" + std::to_string(d); 
+        jMap.insert({currKey, val});    
+    }
+    
+    cout << "The value at key, Key86 is: "<< jMap.at("Key86") << "\n";
+	cout << "The size is: "<< jMap.size() << "\n";
+	
+	// There is a swap function - It swaps maps. 
+	jMap.swap(jMap2);
+	cout << "The new value with jMap2's key is: "<< jMap.at("jMap2Val") << "\n";
+	
+	jMap.emplace(std::make_pair("SomeNewKey", "SomeNewValue"));
+	cout << "The new value with jMap2's key is: "<< jMap.at("jMap2Val") << "\n";
+	cout << "The new value using emplace and make_pair at key is: "<< jMap.at("SomeNewKey") << "\n";
+    
+	std::map<std::string, std::string> jMap3 = {};
+	
+	// This block works, but will give a warning because it's a C++17 extension. 
+    for(const auto& [key, value] : jMap) {
+        jMap3.insert({key, value});
+    }
+    for(const auto& [key, value] : jMap2) {
+        jMap3.insert({key, value});
+    } 
+    
+    cout << "Ze union of jMap1 and jMap2 is jMap3. Now we access to be sure: "<< jMap3.at("Key100") << "\n";
+	cout << "jMap2Key now: "<< jMap3.at("SomeNewKey") << "\n";
+	
+    cout << "________________________________________________________________\n";
+    cout << "Functor practice. You don't really need to create the functor object from the class, ya declare it and use. \n";
+    cout << "________________________________________________________________\n";
+    
+    const jHandleFunctor addString("String to Add");
+    const jHandleFunctor testString("String to Test");
+    
+    // Notice how the lambda chooses to find the jFunctor class to do this.
+    const auto lambdaTest = [](std::string txt) { return txt + " what will this do? \n";};
+    
+    cout << "Testing the jHandleFunctor! \n";
+    cout << addString(" What the hell?\n");
+    cout << testString(" What the actual hell?\n");
+    cout << "________________________________________________________________\n";
+    
+    cout << "Bonus time, use jFunctor with an auto lambda expression.\n";
+    cout << "________________________________________________________________\n";
+    
+    cout << "Can you guess why the variable lambda test returns a 1 when you don't give it anything? It isn't blasphemy....\n";
+    cout << "Here is what is in lambdaTest: " << lambdaTest << "\n";
+    cout << "Here is what is in lambdaTest: " << lambdaTest(" Lambda mode ") << "\n";
+    std::string s = "someBullshit.Bullshit.OtherBullshit";
+    vector<std::string> resultOfSplit = myVersionOfStringSplit(s,'.');
+    cout << "Split Values: " << resultOfSplit[2] << "\n";
     
     return 0;
 }
