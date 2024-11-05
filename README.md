@@ -1,7 +1,9 @@
 Project Euler Mathematical Coding Challenges Written in C++ 17 and forward!
 
 I will be periodically answering Project Euler mathematical challenges using C++ Datastructures, OOP, functional programming. 
--Line 86 down.
+
+From Line 86 down.
+
 These solutions will be unique to me, don't expect optimal but they should work. 
 
 I will also be practicing fundamental C++ concepts, important to stay fresh. 
