@@ -144,11 +144,15 @@ int jTSolvingProjEulerQ2::formula_Even_Fibonacchi_Sum_With_Limit(int x) {
     int sum = 0; 
     // for(<Do this at the start of loop>, <How many times you loop>, <Do this at the end of the loop>)
     for(int b = 1; b < x; b = c) {
-        c = a + b;
-        a = b;
+        //Only add to the current sum when it is an even number.
         if(b % 2 == 0) {
             sum += b;
         }
+        //Here we're just shifting to the next numbers. - default int initialization is 0, b is already 1. 
+        c = a + b;
+        //a is now the next number, which is b.
+        a = b;
+        //Last line is b = c, which you are saying: the number to sum with a IS the sum of a + b. which is c. 
     } 
     return sum;
 }
