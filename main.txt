@@ -1,19 +1,17 @@
 /******************************************************************************
-Run this whole text file in the online C++ compiler version 17 + 
+Run this whole text file in the online C++ compiler version 11 + 
 The best way to gain confidence, is to quite literally implement everything at least once. 
 
 Then you have this file to come back to later. 
 
-To Become a True Mathemagician, you straight solve a shit ton of problems.
-
--James Tam, <Lusacci / Azn_Mathemagician>
+-JT
 
 "Did you sit in the chair, and actually do it?"
 
 Practicing Mathematics in Programming here: 
-
 https://projecteuler.net/archives
 "You can read a math text book to be a mathematician, Solve Euler Problems to be a Mathemagician."
+
 *******************************************************************************/
 
 #include <iostream>
@@ -85,30 +83,6 @@ class jObjectType3 {
         ~jObjectType3();
 };
 
-class jTSolvingProjEulerQ1 {
-	public: 
-		jTSolvingProjEulerQ1() {}
-		int returnSumOfAllMult_3_and_5(int num);
-};
-
-//___________________________________________________________________________
-// Problem 1 - Finding the sum of all multiples of 3 and 5 below 1000
-//___________________________________________________________________________
-//Simple enough, I'm just gonna iterate over this, then check if it's a multiple of 3 or 5. Then I add it to the sum.
-//Using Auto keyword because I am lazy. 
-
-int jTSolvingProjEulerQ1::returnSumOfAllMult_3_and_5(int num) {
-    int sum = 0; 
-    for(auto i = 0; i < num; i++) {
-        if (i % 3 == 0 || i % 5 == 0) {
-            sum += i;
-        }
-    }
-    
-    cout << "Called the returnSumOfAllMult_3_and_5 function! You gave me: " << num << " as the range. \n"; 
-	return sum;
-}
-
 jObjectType3::jObjectType3() : m_s1(""), m_s2(""), m_s3("") {
     cout << "Default Constructor for jObjectType3 \n";
 }
@@ -132,6 +106,53 @@ jObjectType3::~jObjectType3(){
     cout << "Called ze Destructor, happens at the end. count: " << count << "\n";
     count++;
 } 
+
+//___________________________________________________________________________
+// Problem 1 - Finding the sum of all multiples of 3 and 5 below 1000
+//___________________________________________________________________________
+//Simple enough, I'm just gonna iterate over this, then check if it's a multiple of 3 or 5. Then I add it to the sum.
+//Using Auto keyword because I am lazy. 
+
+class jTSolvingProjEulerQ1 {
+	public: 
+		jTSolvingProjEulerQ1(){}
+		int returnSumOfAllMult_3_and_5(int num);
+};
+
+int jTSolvingProjEulerQ1::returnSumOfAllMult_3_and_5(int num) {
+    int sum = 0; 
+    for(auto i = 0; i < num; i++) {
+        if (i % 3 == 0 || i % 5 == 0) {
+            sum += i;
+        }
+    }
+    
+    cout << "Called the returnSumOfAllMult_3_and_5 function! You gave me: " << num << " as the range. \n"; 
+	return sum;
+}
+
+
+class jTSolvingProjEulerQ2 {
+    public:
+        jTSolvingProjEulerQ2() {}
+        int formula_Even_Fibonacchi_Sum_With_Limit(int x);
+};
+
+int jTSolvingProjEulerQ2::formula_Even_Fibonacchi_Sum_With_Limit(int x) {
+    int a;
+    int c; 
+    int sum = 0; 
+    // for(<Do this at the start of loop>, <How many times you loop>, <Do this at the end of the loop>)
+    for(int b = 1; b < x; b = c) {
+        c = a + b;
+        a = b;
+        if(b % 2 == 0) {
+            sum += b;
+        }
+    } 
+    return sum;
+}
+
 
 struct jamesStruct {
   int id;
@@ -396,6 +417,9 @@ int main()
     std::string s = "someBullshit.Bullshit.OtherBullshit";
     vector<std::string> resultOfSplit = myVersionOfStringSplit(s,'.');
     cout << "Split Values: " << resultOfSplit[2] << "\n";
+    
+    jTSolvingProjEulerQ2 solver2;
+    cout << "The sum of the even fibonacchi sequence: " << solver2.formula_Even_Fibonacchi_Sum_With_Limit(4000000) << "\n";
     
     return 0;
 }
