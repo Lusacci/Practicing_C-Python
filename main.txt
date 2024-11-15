@@ -110,6 +110,7 @@ jObjectType3::~jObjectType3(){
 //___________________________________________________________________________
 // Problem 1 - Finding the sum of all multiples of 3 and 5 below 1000
 //___________________________________________________________________________
+//
 //Simple enough, I'm just gonna iterate over this, then check if it's a multiple of 3 or 5. Then I add it to the sum.
 //Using Auto keyword because I am lazy. 
 
@@ -131,6 +132,11 @@ int jTSolvingProjEulerQ1::returnSumOfAllMult_3_and_5(int num) {
 	return sum;
 }
 
+//____________________________________________________________________________________________
+// Problem 2 - Finding the sum of the even fibonacchi sequence numbers with limit at 4,000,000
+//____________________________________________________________________________________________
+// 
+// Had some trouble with this one, will need to do this one again at some point. 
 
 class jTSolvingProjEulerQ2 {
     public:
@@ -144,19 +150,40 @@ int jTSolvingProjEulerQ2::formula_Even_Fibonacchi_Sum_With_Limit(int x) {
     int sum = 0; 
     // for(<Do this at the start of loop>, <How many times you loop>, <Do this at the end of the loop>)
     for(int b = 1; b < x; b = c) {
-        //Only add to the current sum when it is an even number.
+        c = a + b;
+        a = b;
         if(b % 2 == 0) {
             sum += b;
         }
-        //Here we're just shifting to the next numbers. - default int initialization is 0, b is already 1. 
-        c = a + b;
-        //a is now the next number, which is b.
-        a = b;
-        //Last line is b = c, which you are saying: the number to sum with a IS the sum of a + b. which is c. 
     } 
     return sum;
 }
 
+//_____________________________________________________________________________________________
+// Problem 3 - Largest Prime Factor
+// What is the largest prime factor of the number - 600851475143?
+//_____________________________________________________________________________________________
+//
+// Breaking down the math to code it. 
+// What is a prime number?  
+// Google: A number is considered prime if it is greater than 1 and can only be divided evenly by itself and 1. 
+// Math Formula: 6n+- 1. (6n+1) or (6n-1) which is n % 6 == 1
+// If the number is too large to loop through the computation, implement the formula using its square root. 
+// Please see the Sieve of Eratosthenes
+
+class jTSolvingProjEulerQ3 {
+    public:   
+        jTSolvingProjEulerQ3() {}
+        //integer limit is 2.14billion ish. 
+        int calculateLargestPrimeFactorAtLimit(long long int largeLimit); // append the suffix ll to be used as an integer. store it as integer when it is smaller. 
+};
+
+int jTSolvingProjEulerQ3::calculateLargestPrimeFactorAtLimit(long long largeLimit) {
+    //Square root this immensly large number. 
+    cout << "q3Test\n";
+    int largeLimitSquare = std::sqrtl(largeLimit);
+    cout << largeLimitSquare;
+}
 
 struct jamesStruct {
   int id;
@@ -423,7 +450,16 @@ int main()
     cout << "Split Values: " << resultOfSplit[2] << "\n";
     
     jTSolvingProjEulerQ2 solver2;
-    cout << "The sum of the even fibonacchi sequence: " << solver2.formula_Even_Fibonacchi_Sum_With_Limit(4000000) << "\n";
+    cout << "The sum of the even fibonacchi sequence with limit 4 million is: " << solver2.formula_Even_Fibonacchi_Sum_With_Limit(4000000) << "\n";
+    
+    jTSolvingProjEulerQ3 solver3;
+    //solver3.calculateLargestPrimeFactorAtLimit(600851475143LL);
+    
+    std::vector<int> v1 = {};
+    uint64_t num = 600851475143;
+    uint64_t rootNum = std::sqrt(num);
+    cout << "The Root of num is: "<< rootNum << "\n"; 
+    //
     
     return 0;
 }
