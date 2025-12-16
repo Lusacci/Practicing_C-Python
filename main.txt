@@ -12,6 +12,14 @@ Practicing Mathematics in Programming here:
 https://projecteuler.net/archives
 "You can read a math text book to be a mathematician, Solve Euler Problems to be a Mathemagician."
 
+TODO_LIST
+-Utilizing C++20 features: 
+--3 way comparison <=> for determining strong / weak / partial order in item/value equivalents
+--C++20 Ranges capabilities
+--Modules
+--std::algorithm utilities.
+
+
 *******************************************************************************/
 
 #include <iostream>
