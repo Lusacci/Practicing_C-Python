@@ -20,6 +20,7 @@ https://projecteuler.net/archives
 #include <variant>
 #include <map>
 #include <cstring>  
+#include <cmath>
 
 using namespace std;
 
@@ -182,8 +183,8 @@ int jTSolvingProjEulerQ3::calculateLargestPrimeFactorAtLimit(long long largeLimi
     //Square root this immensly large number. 
     cout << "q3Test\n";
     int largeLimitSquare = std::sqrtl(largeLimit);
-    cout << largeLimitSquare;
-}
+    return largeLimitSquare;
+};
 
 struct jamesStruct {
   int id;
@@ -195,13 +196,13 @@ struct jamesStruct {
 }; 
 //Unused
 //const size_t byte {8};
-typedef uint32_t var_j;
-typedef uint64_t var_t;
+//typedef uint32_t var_j;
+//typedef uint64_t var_t;
 
-struct jt{
-    var_j j {};
-    var_t t {};
-};
+//struct jt{
+//    var_j j {};
+//    var_t t {};
+//};
 
 int jamesbasicfunc() {
     cout << "Some Random function Call, testing basic capabilities..\n";
@@ -456,9 +457,9 @@ int main()
     //solver3.calculateLargestPrimeFactorAtLimit(600851475143LL);
     
     std::vector<int> v1 = {};
-    uint64_t num = 600851475143;
-    uint64_t rootNum = std::sqrt(num);
-    cout << "The Root of num is: "<< rootNum << "\n"; 
+    //uint64_t num = 600851475143;
+    //uint64_t rootNum = std::sqrt(num);
+    //cout << "The Root of num is: "<< rootNum << "\n"; 
     //
     
     return 0;
