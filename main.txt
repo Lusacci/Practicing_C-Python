@@ -8,6 +8,22 @@ Then you have this file to come back to later.
 
 "Did you sit in the chair, and actually do it?"
 
+⣿⠛⢿⣿⣿⣟⠛⣿⣿⣿⣿⠛⣿⣿⡟⢻⣿⣿⠛⣿⣿⣿⣿⠛⣻⣿⣿⡿⠛⣿
+⣿⣧⡈⠻⣿⣿⣆⠘⢿⣿⣿⡇⢹⣿⡇⢸⣿⡏⢸⣿⣿⡿⠃⣰⣿⣿⠟⢁⣼⣿
+⣿⣿⣿⣦⡈⠻⣿⣧⡈⢻⣿⣧⠈⣿⣧⣼⣿⠃⣸⣿⡟⢁⣼⣿⠟⢁⣴⣿⣿⣿
+⣿⣄⠙⠿⣿⣄⠘⢿⣷⡀⢻⣿⡀⣻⡿⢿⣟⢀⣿⡟⢀⣾⡿⠃⣠⣿⠿⠋⣠⣿
+⣿⣿⣷⣦⡉⠻⣷⣄⠙⢷⡀⢻⣷⡟⠀⠀⢻⣾⡟⢀⡾⠋⣠⣾⠟⢉⣴⣾⣿⣿
+⣿⠿⠿⣿⣿⣷⣤⡙⠷⠀⠻⣼⠟⠀⠀⠀⠀⠻⣧⠟⠀⠾⢋⣤⣾⣿⣿⠿⠿⣿
+⣿⣷⣦⣤⣈⡙⠛⠿⢶⣄⣴⠏⠀⢀⣀⣀⡀⠀⠹⣦⣠⡶⠿⠛⢋⣁⣤⣴⣾⣿
+⣿⡉⠙⠛⠛⠛⠷⠶⠤⣼⡿⠞⢻⡿⢛⣛⣿⡟⠳⢿⣧⠤⠶⠾⠛⠛⠛⠋⢉⣿
+⣿⣿⣿⣿⣿⠶⠶⢶⣾⡏⠀⠀⠸⣇⣿⣿⣿⠇⠀⠀⢹⣷⡶⠶⠶⣿⣿⣿⣿⣿
+⣿⣤⣤⣶⣶⡶⣶⡾⠛⠷⣤⣄⣀⣈⠛⠛⣁⣀⣠⣤⠾⠛⢷⣶⢶⣶⣶⣤⣤⣿
+⣿⠟⠛⢉⣡⣴⡟⠁⠀⠀⠀⠉⠉⠛⠛⠛⠛⠉⠉⠀⠀⠀⠈⢻⣦⣌⡉⠛⠻⣿
+⣿⣶⣿⠟⣿⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⣿⠻⣿⣶⣿
+⣿⠋⣡⣼⠿⢿⣿⠿⣿⡿⢿⣿⠿⣿⡿⢿⣿⠿⣿⡿⢿⣿⠿⣿⡿⠿⣧⣌⠙⣿
+⣿⡿⠟⢁⣴⠟⣡⣾⠏⢠⣾⡇⢰⣿⡇⢸⣿⡆⢸⣷⡄⠹⣷⣌⠻⣦⡈⠻⢿⣿
+⣿⣤⣴⣿⣥⣴⣿⣯⣤⣿⣿⣥⣿⣿⣧⣼⣿⣿⣬⣿⣿⣤⣽⣿⣦⣬⣿⣦⣤⣿
+
 Practicing Mathematics in Programming here: 
 https://projecteuler.net/archives
 "You can read a math text book to be a mathematician, Solve Euler Problems to be a Mathemagician."
@@ -29,6 +45,7 @@ TODO_LIST
 #include <map>
 #include <cstring>  
 #include <cmath>
+#include <memory>
 
 using namespace std;
 
@@ -70,6 +87,12 @@ class jObjectType2 {
         void print(std::string);
 };
 
+class jEntity {
+    public:
+	    jEntity(){ std::cout << "Created jEntity" << std::endl;}
+		~jEntity(){ std::cout << "Destroyed jEntity" << std::endl;}
+		void Print() {}
+};
 
 //This is how you implement the method you declared in a class. 
 void jObjectType2::print(std::string s) {
@@ -470,5 +493,18 @@ int main()
     //cout << "The Root of num is: "<< rootNum << "\n"; 
     //
     
+	cout << "________________________________________________________________\n";
+	cout << "Testing object lifetimes with unique ptr and move logic.";
+	cout << "________________________________________________________________\n";
+	
+	//Create a unique_ptr, a stack allocated object that CANNOT be copied. Memory of that allocated heap object will be freed upon used.
+	std::unique_ptr<jEntity> entity = std::make_unique<jEntity>(); 
+	std::unique_ptr<jEntity> ptrChange = std::move(entity);
+	if (entity == nullptr) {
+		std::cout << "entity ptr became empty with the std::move. It is freed." << std::endl;
+	}
+	ptrChange->Print();
+	std::vector<std::unique_ptr<jEntity>> vecOfJEntities;
+	vecOfJEntities.push_back(std::move(ptrChange));
     return 0;
 }
