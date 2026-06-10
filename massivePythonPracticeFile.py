@@ -10,6 +10,12 @@
 import os, subprocess, sys
 
 ################################################################################
+#Debugging
+################################################################################
+
+import pdb
+
+################################################################################
 # Classes
 ################################################################################
 
@@ -23,8 +29,10 @@ class JTObject:
 ################################################################################
 #Methods w/o classes
 ################################################################################
+###########
+#Algorithms
+###########
 
-#Sorting
 def twoPointer(array : []) -> int:
     # Two Pointer Method to tackle Two Sum Problem. 
     # Two Sum - Find the sum of the largest 2 pairs in array. 
@@ -48,17 +56,48 @@ def twoPointer(array : []) -> int:
             return 0
     return currSum 
 
+def sliding_Window(array : [], subarray_Window_Size : int ) -> int:
+    #Aim for an O(n) solution using the comparison between a current subarray_window and previous one.
+    #Methodology may need to include a window of varying size.... this means being able to use 2 for loops
+    #that is still O(n) by only looping what you need and updating when you have to. 
+    #First step should always be evaluating initial condition of the data you care about. 
+    # - The size of the window here and what it could be to the whole data set. 
+    # -- Bigger, equal, or less than the data. 
+    # --- Techniques can be used upon evaluating current condition.
+    #pdb.set_trace()
+    if subarray_Window_Size >= len(array):
+        #Just sum the whole thing and return, which is just O(n)
+        for item in range(0, len(array), 1): 
+            max_sum += array[item]
+        return max_sum
+    else:
+        #Edge case where window size is less than total size, therefore you can split what you need to count. 
+        subarray_Window_sum = 0
+        for i in range(0, subarray_Window_Size, 1): 
+            subarray_Window_sum += array[i] 
+        print("The first for loop will only iterate to the end of the subarray window, which gives us: {subarray_Window_sum}")
+        #Now count the rest of it after copying what ya have. (Count by 2s not 3s)
+        updated_Window_sum = subarray_Window_sum 
+        for j in range(subarray_Window_Size, len(array), 1): 
+            # To count the remaining elements in the same set, try to break it down into moves. 
+            # Slide the window past limit
+            updated_Window_sum += array[j]
+            # Remove last left limit.
+            updated_Window_sum -= array[j - subarray_Window_Size]
+            # So at this point, you not only updated the window, you 'counted' the move.
+            if updated_Window_sum >= subarray_Window_sum:
+                subarray_Window_sum = updated_Window_sum
+        return subarray_Window_sum
+    
 #Main Method
 def main() -> None: 
     # Do a range based for loop for object creation here. 
     # Tree?? / Map?? 
-    print("Practicing Python coding Exercises to review on ChatGPT suggestion.")    
     print("___________________________________________________________________")
-    #for x in range(100): 
-        #new_Object = JTObject(x)
-        #print(f"Object creation in progress... {new_Object.id} ")
-    nums = [0, 1, 2, 2, 0, 1, 2]
-    print(twoPointer(nums))
+    print("Practicing Python coding Exercises to review on ChatGPT suggestion.")    
+    print("___________________________________________________________________\n")
+    test_case1 = [5, 2, -1, 0, 3]
+    print(sliding_Window(test_case1, 3))
 
 ################################################################################
 #Method Execution from Main.
