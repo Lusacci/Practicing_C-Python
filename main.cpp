@@ -241,6 +241,33 @@ int jamesbasicfunc() {
     return ++val;
 }
 
+int slidingWindow ( std::vector<int> array, int sliding_window_size) {
+    //O(n) solution would be to create the first sliding window sum, then create a new one and compare it against the first one. 
+    if( sliding_window_size >= array.size() ) {
+        int max_sum = 0;
+        for(int i = 0; i < array.size(); i++) {
+            max_sum += array.at(i);
+        }
+        return max_sum; 
+    } 
+    else {
+        //Now create first window, create 2nd window, compare and return.
+        int initial_window_sum = 0;
+        for (int i = 0; i < sliding_window_size; i++) {
+            initial_window_sum += array.at(i);
+        }
+        int copy_window_sum = initial_window_sum;
+        for(int j = sliding_window_size; j < array.size(); j++) {
+            copy_window_sum += array.at(j);
+            copy_window_sum -= array.at(j - sliding_window_size);
+            if ( copy_window_sum >= initial_window_sum) {
+	        initial_window_sum = copy_window_sum;
+            }
+        }
+        return initial_window_sum;
+    }
+}
+
 template<class T>
 vector<T> insertItemIntoVectorAtIndexAndReturnIt(vector<T> vector, T item, int index) {
     //Initialize empty vector.
@@ -297,6 +324,7 @@ vector<string> myVersionOfStringSplit(std::string yourString, char delimiter){
 
 int main()
 {
+    /*
     auto test = "James_Tam_Test_String"; 
     //Looping over strings....can be retrieved from streams later. 
     cout << "Could be useful later to iterate over strings... taken from UDP.\n";
@@ -506,5 +534,8 @@ int main()
 	ptrChange->Print();
 	std::vector<std::unique_ptr<jEntity>> vecOfJEntities;
 	vecOfJEntities.push_back(std::move(ptrChange));
+    */
+    auto sliding_numbers = {5, 2, -1, 0, 3};
+    cout << slidingWindow(sliding_numbers, 3) << endl;
     return 0;
 }
