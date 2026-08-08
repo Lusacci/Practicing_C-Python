@@ -240,6 +240,39 @@ int jamesbasicfunc() {
     static int val = 0;
     return ++val;
 }
+//This is the largest sum in a sorted list of numbers.
+int twoSum(std::vector<int> nums) {
+    //O(n) solution involves counting the sums from left to right and right to left simultaneously.
+    int left_pointer, right_pointer, currSum = 0; 
+    for(int i = 0; i < nums.size(); i++){
+        left_pointer = i;
+        right_pointer = nums.size() - 1;
+        currSum = nums.at(left_pointer) + nums.at(right_pointer); 
+        if(currSum > nums.at(i)) {
+            right_pointer -= 1;
+        }
+        else {
+            currSum = nums.at(i);
+            left_pointer += 1;
+        }
+    }
+    return currSum;
+}
+vector<int> twoSumIndices(std::vector<int> totalNums, int target){
+     //The goal to remember is to use the 'Hash Table' or Unordered map and the complement, which is the twoSum formula with basic algebra. 
+     std::unordered_map<int, int> totalNumsValueByIndex;
+     for(int i = 0; i < totalNums.size(); i++){
+         int complement = target - totalNums[i];
+         //You can call hash table functions as a condition.
+         if(totalNumsValueByIndex.find(complement) != totalNumsValueByIndex.end())
+         {
+             return {totalNumsValueByIndex[complement], i};
+         }
+         //Populating the unordered map. 
+         totalNumsValueByIndex[totalNums[i]] = i; //This is actually step one. Remember
+     }
+        
+}
 
 int slidingWindow ( std::vector<int> array, int sliding_window_size) {
     //O(n) solution would be to create the first sliding window sum, then create a new one and compare it against the first one. 
@@ -535,7 +568,15 @@ int main()
 	std::vector<std::unique_ptr<jEntity>> vecOfJEntities;
 	vecOfJEntities.push_back(std::move(ptrChange));
     */
+    auto nums = {5, 2, -1, 0, 3};
+    cout << "The max sum of nums is: " << twoSum(nums) << endl;
     auto sliding_numbers = {5, 2, -1, 0, 3};
-    cout << slidingWindow(sliding_numbers, 3) << endl;
+    cout << "The sliding window gives us: " << slidingWindow(sliding_numbers, 3) << endl;
+
+    std::vector<int> nums2 = {2, 7, 11, 15};
+    std::vector<int> solution = twoSumIndices(nums2, 9);
+    for(int i : solution){
+    	cout << i << endl;
+    } 
     return 0;
 }
